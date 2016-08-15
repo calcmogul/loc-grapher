@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{afterpage}
+\usepackage[margin=0.75in, landscape]{geometry}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.13}
+
+\begin{document}
+\afterpage{
+  \pagenumbering{gobble}
+  \centering
+  \begin{tikzpicture} [trim axis left, trim axis right]
+    \begin{axis} [
+      title=WPILib Lines of Code vs Commits,
+      xlabel=Commits,
+      ylabel=Lines of Code,
+      width=0.95\textwidth, height=0.85\textheight,
+      scale only axis,
+      xmin=0,
+      ymin=190000, ymax=330000,
+      grid=both,
+      max space between ticks=20pt,
+      xticklabel style={
+        rotate=45,
+        anchor=east,
+        /pgf/number format/1000 sep={},
+      },
+      yticklabel style={
+        /pgf/number format/.cd,
+          fixed,
+          precision=3,
+          1000 sep={},
+        /tikz/.cd,
+      },
+      scaled y ticks={base 10:-3},
+      ]
+      \addplot[blue] table [col sep=comma] {data.csv};
+    \end{axis}
+  \end{tikzpicture}
+  \newpage
+  \centering
+  \begin{tikzpicture} [trim axis left, trim axis right]
+    \begin{axis} [
+      title=WPILib Lines of Code vs Commits,
+      xlabel=Commits,
+      ylabel=Lines of Code,
+      width=0.95\textwidth, height=0.85\textheight,
+      scale only axis,
+      xmin=1200,
+      ymin=197000, ymax=206000,
+      grid=both,
+      max space between ticks=20pt,
+      xticklabel style={
+        rotate=45,
+        anchor=east,
+        /pgf/number format/1000 sep={},
+      },
+      yticklabel style={
+        /pgf/number format/.cd,
+          fixed,
+          precision=3,
+          1000 sep={},
+        /tikz/.cd,
+      },
+      scaled y ticks={base 10:-3},
+      ]
+      \addplot[blue] table [col sep=comma] {data.csv};
+    \end{axis}
+  \end{tikzpicture}
+}
+\end{document}
