@@ -19,7 +19,6 @@ else
 fi
 
 # Create list of commit hashes
-read -r -a array <<< `git log --reverse --pretty=oneline | cut -d ' ' -f 1`
 declare -i x=0
 rm -f data.csv
 
@@ -29,7 +28,7 @@ echo commits$','loc >> data.csv
 declare -i total=$(git log --pretty=oneline | wc -l)
 
 # Get lines of code (LOC) for all commits in branch and write it to CSV
-for elem in "${array[@]}"; do
+for elem in `git log --reverse --pretty=oneline | cut -d ' ' -f 1`; do
   # Get LOC for current commit
   git checkout -q $elem
   x=$((x + 1))
