@@ -37,9 +37,7 @@ for elem in `git log --reverse --pretty=oneline | cut -d ' ' -f 1`; do
 
   # Print progress data and write LOC count to CSV
   echo -n $'\r'Parsing commits for data.csv: $percent% \($x$'/'$total\)
-  if [ "$y" -ne "0" ]; then
-    echo $x$','$y >> data.csv
-  fi
+  echo $x$','$y >> data.csv
 done
 
 echo -n $',' done.
