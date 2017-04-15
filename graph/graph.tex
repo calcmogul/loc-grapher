@@ -10,17 +10,18 @@
 \afterpage{
   \pagenumbering{gobble}
   \centering
+  \LARGE \sffamily
   \begin{tikzpicture} [trim axis left, trim axis right]
     \begin{axis} [
       title=WPILib Lines of Code vs Commits,
       xlabel=Commits,
       ylabel=Lines of Code,
-      width=0.95\textwidth, height=0.85\textheight,
+      width=0.95\textwidth, height=0.75\textheight,
       scale only axis,
       xmin=0,
       ymin=0,
       grid=both,
-      max space between ticks=20pt,
+      max space between ticks=28pt,
       xticklabel style={
         rotate=45,
         anchor=east,
@@ -35,7 +36,7 @@
       },
       scaled y ticks={base 10:-3},
       ]
-      \addplot[blue] table [col sep=comma] {data.csv};
+      \addplot[blue, line width=2pt] table [col sep=comma] {data.csv};
     \end{axis}
   \end{tikzpicture}
   \newpage
@@ -46,12 +47,12 @@
       title=WPILib Lines of Code vs Commits,
       xlabel=Commits,
       ylabel=Lines of Code,
-      width=0.95\textwidth, height=0.85\textheight,
+      width=0.95\textwidth, height=0.75\textheight,
       scale only axis,
       xmin=1200,
       ymin=0,
       grid=both,
-      max space between ticks=20pt,
+      max space between ticks=28pt,
       xticklabel style={
         rotate=45,
         anchor=east,
@@ -67,7 +68,7 @@
       },
       scaled y ticks={base 10:-3},
       ]
-      \addplot[blue] table [col sep=comma] {data.csv};
+      \addplot[blue, line width=2pt] table [col sep=comma] {data.csv};
     \end{axis}
   \end{tikzpicture}
   \newpage
@@ -78,12 +79,12 @@
       title=WPILib Lines of Code vs Commits,
       xlabel=Commits,
       ylabel=Lines of Code,
-      width=0.95\textwidth, height=0.85\textheight,
+      width=0.95\textwidth, height=0.75\textheight,
       scale only axis,
       xmin=1645,
       ymin=0,
       grid=both,
-      max space between ticks=20pt,
+      max space between ticks=28pt,
       xticklabel style={
         rotate=45,
         anchor=east,
@@ -99,7 +100,7 @@
       },
       scaled y ticks={base 10:-3},
       ]
-      \addplot[blue] table [col sep=comma] {data.csv};
+      \addplot[blue, line width=2pt] table [col sep=comma] {data.csv};
     \end{axis}
   \end{tikzpicture}
 }
