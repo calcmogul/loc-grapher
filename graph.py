@@ -26,6 +26,9 @@ def main():
     # Quash rename limit warning
     subprocess.run(["git", "config", "diff.renameLimit", "999999"])
 
+    # Check out branch before retrieving log info so branch exists
+    subprocess.run(["git", "checkout", branch])
+
     # Create list of commit hashes
     print("Collecting commit data...", end="")
     sys.stdout.flush()
