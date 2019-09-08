@@ -33,11 +33,17 @@ def main():
     print("Collecting commit data...", end="")
     sys.stdout.flush()
     args = [
-        "git", "--no-pager", "log", "--numstat", "--reverse",
-        "--pretty=oneline", branch
+        "git",
+        "--no-pager",
+        "log",
+        "--numstat",
+        "--reverse",
+        "--pretty=oneline",
+        branch,
     ]
-    output_list = subprocess.run(
-        args, stdout=subprocess.PIPE).stdout.decode().split("\n")
+    output_list = (
+        subprocess.run(args, stdout=subprocess.PIPE).stdout.decode().split("\n")
+    )
     print(" done.")
 
     line_regex = re.compile("([0-9]+)\s+([0-9]+)\s+(\S+)")
