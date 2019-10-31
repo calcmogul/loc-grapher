@@ -41,9 +41,7 @@ def main():
         "--pretty=oneline",
         branch,
     ]
-    output_list = (
-        subprocess.run(args, stdout=subprocess.PIPE).stdout.decode().split("\n")
-    )
+    output_list = subprocess.check_output(args, encoding="utf-8").splitlines()
     print(" done.")
 
     line_regex = re.compile("([0-9]+)\s+([0-9]+)\s+(\S+)")
@@ -52,7 +50,7 @@ def main():
     line_count = 0
     with open("data.csv", "w") as data:
         for line in output_list:
-            if "\t" not in line[0:40]:
+            if "\t" not in line[:40]:
                 # Write entry to file
                 data.write(str(commit_count))
                 data.write(",")
