@@ -45,7 +45,7 @@ def main():
     print(" done.")
 
     line_regex = re.compile("([0-9]+)\s+([0-9]+)\s+(\S+)")
-    ext_regex = re.compile(".*\.(c|cpp|h|hpp|inc|inl|java|py)$")
+    ext_regex = re.compile("\.(c|cpp|h|hpp|inc|inl|java|py)$")
     commit_count = 0
     line_count = 0
     with open("data.csv", "w") as data:
