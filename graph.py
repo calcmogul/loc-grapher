@@ -7,15 +7,10 @@ import subprocess
 import sys
 
 
-def main():
-    repo = "allwpilib"
-    branch = "master"
-    url = "git://github.com/wpilibsuite/" + repo
+def clone_repo(url, branch):
+    repo = os.path.basename(url)
 
-    cwd = os.getcwd()
-
-    # Clone Git repository into /tmp or update it
-    os.chdir("/tmp")
+    # Clone Git repository into current directory or update it
     if not os.path.exists(repo):
         subprocess.run(["git", "clone", url])
         os.chdir(repo)
@@ -28,6 +23,14 @@ def main():
 
     # Check out branch before retrieving log info so branch exists
     subprocess.run(["git", "checkout", branch])
+
+
+def main():
+    branch = "master"
+
+    cwd = os.getcwd()
+    os.chdir("/tmp")
+    clone_repo("git://github.com/wpilibsuite/allwpilib", branch)
 
     # Create list of commit hashes
     print("Collecting commit data...", end="")
