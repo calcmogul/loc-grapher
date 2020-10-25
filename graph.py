@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 
 
 def clone_repo(url, branch):
@@ -12,7 +13,8 @@ def clone_repo(url, branch):
 
     # Clone Git repository into current directory or update it
     if not os.path.exists(repo):
-        subprocess.run(["git", "clone", url])
+        dest = os.path.join(os.getcwd(), repo)
+        subprocess.run(["git", "clone", url, dest])
         os.chdir(repo)
     else:
         os.chdir(repo)
@@ -29,7 +31,7 @@ def main():
     branch = "master"
 
     cwd = os.getcwd()
-    os.chdir("/tmp")
+    os.chdir(tempfile.gettempdir())
     clone_repo("git://github.com/wpilibsuite/allwpilib", branch)
 
     # Create list of commit hashes
