@@ -74,11 +74,11 @@ def main():
         data.write(str(line_count))
         data.write("\n")
 
-    # Generate graph
-    shutil.move("data.csv", cwd + "/graph/data.csv")
-    os.chdir(cwd + "/graph")
-    subprocess.run(["latexmk", "-pdf", "-silent", "graph"])
-    shutil.copy("graph.pdf", "../loc.pdf")
+    # Generate graphs
+    shutil.move("data.csv", cwd + "/loc/data.csv")
+    os.chdir(cwd + "/loc")
+    subprocess.run(["latexmk", "-pdf", "-silent", "loc"])
+    shutil.copy("loc.pdf", "../loc.pdf")
 
 
 if __name__ == "__main__":
