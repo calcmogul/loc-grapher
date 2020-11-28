@@ -78,7 +78,7 @@ def main():
     shutil.move("data.csv", cwd + "/graph/data.csv")
     os.chdir(cwd + "/graph")
     subprocess.run(["latexmk", "-pdf", "-silent", "graph"])
-    os.rename("graph.pdf", "../loc.pdf")
+    shutil.copy("graph.pdf", "../loc.pdf")
 
 
 if __name__ == "__main__":
