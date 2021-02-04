@@ -28,7 +28,7 @@ def clone_repo(url, branch):
 
 
 def main():
-    branch = "master"
+    branch = "main"
 
     cwd = os.getcwd()
     os.chdir(tempfile.gettempdir())
