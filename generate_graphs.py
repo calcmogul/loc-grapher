@@ -38,7 +38,7 @@ def main():
     )
     args = parser.parse_args()
 
-    branch = "2022"
+    branch = "main"
 
     cwd = os.getcwd()
     os.chdir(tempfile.gettempdir())
