@@ -25,7 +25,7 @@ def clone_repo(url, branch):
     subprocess.run(["git", "config", "diff.renameLimit", "999999"])
 
     # Check out branch before retrieving log info so branch exists
-    subprocess.run(["git", "checkout", branch])
+    subprocess.run(["git", "switch", branch])
 
 
 def main():
