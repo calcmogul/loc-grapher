@@ -11,14 +11,14 @@ import tempfile
 
 def clone_repo(url, branch):
     repo = os.path.basename(url)
+    dest = os.path.join(os.getcwd(), repo).rstrip(".git")
 
     # Clone Git repository into current directory or update it
-    if not os.path.exists(repo):
-        dest = os.path.join(os.getcwd(), repo)
+    if not os.path.exists(dest):
         subprocess.run(["git", "clone", url, dest])
-        os.chdir(repo)
+        os.chdir(dest)
     else:
-        os.chdir(repo)
+        os.chdir(dest)
         subprocess.run(["git", "pull"])
 
     # Quash rename limit warning
