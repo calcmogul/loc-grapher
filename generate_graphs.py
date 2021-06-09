@@ -28,6 +28,57 @@ def clone_repo(url, branch):
     subprocess.run(["git", "switch", branch])
 
 
+def get_commit_count(branch, ref):
+    return subprocess.check_output(
+        ["git", "rev-list", "--count", f"--before={ref}", branch], encoding="ascii"
+    ).rstrip()
+
+
+def generate_latex_plot_cmd(xmin, xmax, title):
+    # Generating this in Python was necessary because \input{} in a tikzpicture
+    # hangs
+    return (
+        r"""\begin{center}
+  \LARGE \sffamily
+  \begin{tikzpicture} [trim axis left, trim axis right]
+    \begin{axis} [
+      title=#3,
+      xlabel=Commits,
+      ylabel=Lines of Code,
+      width=0.95\textwidth, height=0.75\textheight,
+      scale only axis,
+      xmin=#1,
+      xmax=#2,
+      ymin=0,
+      grid=both,
+      max space between ticks=28pt,
+      xticklabel style={
+        rotate=45,
+        anchor=east,
+        /pgf/number format/1000 sep={},
+      },
+      restrict x to domain=#1:,
+      yticklabel style={
+        /pgf/number format/.cd,
+          fixed,
+          precision=3,
+          1000 sep={},
+        /tikz/.cd,
+      },
+      scaled y ticks={base 10:-3},
+      ]
+      \addplot[blue, line width=1pt] table [col sep=comma] {data.csv};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+""".replace(
+            "#1", xmin
+        )
+        .replace("#2", xmax)
+        .replace("#3", title)
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -86,7 +137,44 @@ def main():
             data.write("\n")
         shutil.move("data.csv", f"{cwd}/loc/data.csv")
 
-    # Generate graphs
+    # Generate plot ranges of interest
+    plot_all_start = "0"
+    plot_all_end = get_commit_count(branch, branch)
+    plot_2019_season_end = get_commit_count(branch, "v2019.4.1")
+    plot_2020_season_end = get_commit_count(branch, "v2020.3.2")
+    plot_2021_season_end = get_commit_count(branch, "v2021.3.1")
+
+    # Generate plots.tex
+    with open(f"{cwd}/loc/plots.tex", "w") as f:
+        f.write(generate_latex_plot_cmd(plot_all_start, plot_all_end, "\\title"))
+        f.write("\\trailer\n")
+        f.write("\\newpage\n")
+        f.write(
+            generate_latex_plot_cmd(
+                plot_2019_season_end,
+                plot_2020_season_end,
+                "\\title\\ (2020 dev season)",
+            )
+        )
+        f.write("\\trailer\n")
+        f.write("\\newpage\n")
+        f.write(
+            generate_latex_plot_cmd(
+                plot_2020_season_end,
+                plot_2021_season_end,
+                "\\title\\ (2021 dev season)",
+            )
+        )
+        f.write("\\trailer\n")
+        f.write("\\newpage\n")
+        f.write(
+            generate_latex_plot_cmd(
+                plot_2021_season_end, plot_all_end, "\\title\\ (2022 dev season)"
+            )
+        )
+        f.write("\\trailer\n")
+
+    # Generate plots
     os.chdir(f"{cwd}/loc")
     subprocess.run(["latexmk", "-pdf", "-silent", "loc"])
     shutil.copy("loc.pdf", "../loc.pdf")
