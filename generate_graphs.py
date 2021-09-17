@@ -140,6 +140,8 @@ def main():
     # Generate plot ranges of interest
     plot_all_start = "0"
     plot_all_end = get_commit_count(branch, branch)
+    plot_2017_season_end = get_commit_count(branch, "v2017.3.1")
+    plot_2018_season_end = get_commit_count(branch, "v2018.4.1")
     plot_2019_season_end = get_commit_count(branch, "v2019.4.1")
     plot_2020_season_end = get_commit_count(branch, "v2020.3.2")
     plot_2021_season_end = get_commit_count(branch, "v2021.3.1")
@@ -147,6 +149,24 @@ def main():
     # Generate plots.tex
     with open(f"{cwd}/loc/plots.tex", "w") as f:
         f.write(generate_latex_plot_cmd(plot_all_start, plot_all_end, "\\title"))
+        f.write("\\trailer\n")
+        f.write("\\newpage\n")
+        f.write(
+            generate_latex_plot_cmd(
+                plot_2017_season_end,
+                plot_2018_season_end,
+                "\\title\\ (2018 dev season)",
+            )
+        )
+        f.write("\\trailer\n")
+        f.write("\\newpage\n")
+        f.write(
+            generate_latex_plot_cmd(
+                plot_2018_season_end,
+                plot_2019_season_end,
+                "\\title\\ (2019 dev season)",
+            )
+        )
         f.write("\\trailer\n")
         f.write("\\newpage\n")
         f.write(
