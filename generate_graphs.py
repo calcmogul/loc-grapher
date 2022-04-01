@@ -93,7 +93,7 @@ def main():
 
     cwd = os.getcwd()
     os.chdir(tempfile.gettempdir())
-    clone_repo("git://github.com/wpilibsuite/allwpilib", branch)
+    clone_repo("https://github.com/wpilibsuite/allwpilib", branch)
 
     if not args.latex_only:
         # Create list of commit hashes
