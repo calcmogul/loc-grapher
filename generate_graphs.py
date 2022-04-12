@@ -138,61 +138,32 @@ def main():
         shutil.move("data.csv", f"{cwd}/loc/data.csv")
 
     # Generate plot ranges of interest
-    plot_all_start = "0"
-    plot_all_end = get_commit_count(branch, branch)
-    plot_2017_season_end = get_commit_count(branch, "v2017.3.1")
-    plot_2018_season_end = get_commit_count(branch, "v2018.4.1")
-    plot_2019_season_end = get_commit_count(branch, "v2019.4.1")
-    plot_2020_season_end = get_commit_count(branch, "v2020.3.2")
-    plot_2021_season_end = get_commit_count(branch, "v2021.3.1")
+    end_2017_season = get_commit_count(branch, "v2017.3.1")
+    end_2018_season = get_commit_count(branch, "v2018.4.1")
+    end_2019_season = get_commit_count(branch, "v2019.4.1")
+    end_2020_season = get_commit_count(branch, "v2020.3.2")
+    end_2021_season = get_commit_count(branch, "v2021.3.1")
+    end_2022_season = get_commit_count(branch, "v2022.4.1")
+    end_all = get_commit_count(branch, branch)
+
+    commit_ranges = [
+        ("0", end_all, "\\title"),
+        (end_2017_season, end_2018_season, "\\title\\ (2018 dev season)"),
+        (end_2018_season, end_2019_season, "\\title\\ (2019 dev season)"),
+        (end_2019_season, end_2020_season, "\\title\\ (2020 dev season)"),
+        (end_2020_season, end_2021_season, "\\title\\ (2021 dev season)"),
+        (end_2021_season, end_2022_season, "\\title\\ (2022 dev season)"),
+        (end_2022_season, end_all, "\\title\\ (2023 dev season)"),
+    ]
 
     # Generate plots.tex
     with open(f"{cwd}/loc/plots.tex", "w") as f:
-        f.write(generate_latex_plot_cmd(plot_all_start, plot_all_end, "\\title"))
-        f.write("\\trailer\n")
-        f.write("\\newpage\n")
-        f.write(
-            generate_latex_plot_cmd(
-                plot_2017_season_end,
-                plot_2018_season_end,
-                "\\title\\ (2018 dev season)",
-            )
-        )
-        f.write("\\trailer\n")
-        f.write("\\newpage\n")
-        f.write(
-            generate_latex_plot_cmd(
-                plot_2018_season_end,
-                plot_2019_season_end,
-                "\\title\\ (2019 dev season)",
-            )
-        )
-        f.write("\\trailer\n")
-        f.write("\\newpage\n")
-        f.write(
-            generate_latex_plot_cmd(
-                plot_2019_season_end,
-                plot_2020_season_end,
-                "\\title\\ (2020 dev season)",
-            )
-        )
-        f.write("\\trailer\n")
-        f.write("\\newpage\n")
-        f.write(
-            generate_latex_plot_cmd(
-                plot_2020_season_end,
-                plot_2021_season_end,
-                "\\title\\ (2021 dev season)",
-            )
-        )
-        f.write("\\trailer\n")
-        f.write("\\newpage\n")
-        f.write(
-            generate_latex_plot_cmd(
-                plot_2021_season_end, plot_all_end, "\\title\\ (2022 dev season)"
-            )
-        )
-        f.write("\\trailer\n")
+        i = 0
+        for start, end, title in commit_ranges:
+            if i > 0:
+                f.write("\\newpage\n")
+            f.write(generate_latex_plot_cmd(start, end, title))
+            f.write("\\trailer\n")
 
     # Generate plots
     os.chdir(f"{cwd}/loc")
