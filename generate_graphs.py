@@ -138,6 +138,9 @@ def main():
         shutil.move("data.csv", f"{cwd}/loc/data.csv")
 
     # Generate plot ranges of interest
+    end_2014_season = get_commit_count(branch, "2014-simulation-alpha-rc3")
+    end_2015_season = get_commit_count(branch, "jenkins-release-2015.337")
+    end_2016_season = get_commit_count(branch, "v2016.5.1")
     end_2017_season = get_commit_count(branch, "v2017.3.1")
     end_2018_season = get_commit_count(branch, "v2018.4.1")
     end_2019_season = get_commit_count(branch, "v2019.4.1")
@@ -148,6 +151,9 @@ def main():
 
     commit_ranges = [
         ("0", end_all, "\\title"),
+        (end_2014_season, end_2015_season, "\\title\\ (2015 dev season)"),
+        (end_2015_season, end_2016_season, "\\title\\ (2016 dev season)"),
+        (end_2016_season, end_2017_season, "\\title\\ (2017 dev season)"),
         (end_2017_season, end_2018_season, "\\title\\ (2018 dev season)"),
         (end_2018_season, end_2019_season, "\\title\\ (2019 dev season)"),
         (end_2019_season, end_2020_season, "\\title\\ (2020 dev season)"),
