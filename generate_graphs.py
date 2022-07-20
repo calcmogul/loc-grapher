@@ -111,14 +111,18 @@ def main():
         output_list = subprocess.check_output(args, encoding="utf-8").splitlines()
         print(" done.")
 
-        line_regex = re.compile("([0-9]+)\s+([0-9]+)\s+(\S+)")
-        ext_regex = re.compile("\.(c|cpp|h|hpp|inc|inl|java|py)$")
+        commit_hash_regex = re.compile("^[a-f0-9]{40}")
+
+        # Fields are additions, subtractions, and filename
+        line_regex = re.compile("^([0-9]+)\s+([0-9]+)\s+(.*?)$")
+
+        ext_regex = re.compile("\.(c|cc|cpp|h|hpp|inc|inl|java|js|py)$")
         commit_count = 0
         line_count = 0
         with open("data.csv", "w") as data:
             for line in output_list:
-                if "\t" not in line[:40]:
-                    # Write entry to file
+                if commit_hash_regex.search(line):
+                    # If line has a commit hash, write entry to file
                     data.write(str(commit_count))
                     data.write(",")
                     data.write(str(line_count))
@@ -126,10 +130,13 @@ def main():
 
                     commit_count += 1
                 else:
-                    match = line_regex.search(line)
-                    if match and ext_regex.search(match.group(3)):
-                        line_count += int(match.group(1))
-                        line_count -= int(match.group(2))
+                    m = line_regex.search(line)
+
+                    # Lines with "- -" for counts are for binary files and are
+                    # ignored by line_regex
+                    if m and ext_regex.search(m.group(3)):
+                        line_count += int(m.group(1))
+                        line_count -= int(m.group(2))
             # Write rest of data
             data.write(str(commit_count))
             data.write(",")
