@@ -104,6 +104,7 @@ def main():
             "--no-pager",
             "log",
             "--numstat",
+            "--no-renames",
             "--reverse",
             "--pretty=oneline",
             branch,
