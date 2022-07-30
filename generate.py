@@ -33,9 +33,9 @@ def clone_repo(url, branch):
 
 
 class Language:
-    def __init__(self, name, extensions):
+    def __init__(self, name, name_regex):
         self.name = name
-        self.ext_regex = re.compile(r"\.(" + "|".join(extensions) + ")$")
+        self.name_regex = re.compile(name_regex)
         self.line_count = 0
 
 
@@ -83,9 +83,12 @@ def main():
     clone_repo("https://github.com/wpilibsuite/allwpilib", branch)
 
     languages = []
-    languages.append(Language("C++", ["cc", "cpp", "h", "hpp", "inc", "inl"]))
-    languages.append(Language("Java", ["java"]))
-    languages.append(Language("Python", ["py"]))
+    languages.append(
+        Language("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
+    )
+    languages.append(Language("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
+    languages.append(Language("Java", r"\.java$"))
+    languages.append(Language("Python", r"\.py$"))
 
     # Collect commit data
     print("Collecting commit data...", end="")
@@ -126,7 +129,7 @@ def main():
             # Lines with "- -" for counts are for binary files and are
             # ignored by line_regex
             for lang in languages:
-                if lang.ext_regex.search(m.group(3)):
+                if lang.name_regex.search(m.group(3)):
                     lang.line_count += int(m.group(1))
                     lang.line_count -= int(m.group(2))
 
