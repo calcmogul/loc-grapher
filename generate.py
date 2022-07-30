@@ -140,12 +140,17 @@ def main():
     for i, lang in enumerate(languages):
         counts[i].append(lang.line_count)
 
+    labels = [lang.name for lang in languages]
+
+    # Move thirdparty to top of stackplot by placing it at the end of the list
+    counts.append(counts.pop(0))
+    labels.append(labels.pop(0))
+
     # Generate plots
     os.chdir(cwd)
     print("Generating plots...", end="")
     sys.stdout.flush()
     with PdfPages("loc.pdf") as pdf:
-        labels = tuple(lang.name for lang in languages)
         generate_plot(pdf, dates, counts, labels)
         for year in range(2014, 2023):
             generate_plot(pdf, dates, counts, labels, (year, year + 1))
