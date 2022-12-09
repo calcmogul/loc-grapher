@@ -116,14 +116,19 @@ def main():
 
     for line in output_list:
         if line.startswith("date "):
-            # If line designates a new commit, record the previous one's line
-            # counts
-            dates.append(datetime.datetime.strptime(line[5:], "%Y-%m-%d %H:%M:%S %z"))
+            # If line designates a new commit, record the date
+            date = datetime.datetime.strptime(line[5:], "%Y-%m-%d %H:%M:%S %z")
+            dates.append(date)
 
-            if len(dates) == 1:
-                continue
-
+            dates.append(dates[-1])
             for i, lang in enumerate(languages):
+                if len(dates) == 2:
+                    counts[i].append(0)
+                else:
+                    # Append previous count to move horizontally from
+                    # previous date to current date
+                    counts[i].append(counts[i][-1])
+                # Append current count to move vertically
                 counts[i].append(lang.line_count)
         elif m := line_regex.search(line):
             # Lines with "- -" for counts are for binary files and are
@@ -137,7 +142,13 @@ def main():
                     break
 
     # Write rest of data
+    dates.append(dates[-1])
+    dates.append(dates[-1])
     for i, lang in enumerate(languages):
+        # Append previous count to move horizontally from previous
+        # date to current date
+        counts[i].append(counts[i][-1])
+        # Append current count to move vertically
         counts[i].append(lang.line_count)
 
     labels = [lang.name for lang in languages]
