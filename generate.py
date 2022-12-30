@@ -107,7 +107,7 @@ def main():
     print(" done.")
 
     # Fields are additions, subtractions, and filename
-    line_regex = re.compile("^([0-9]+)\s+([0-9]+)\s+(.*?)$")
+    line_regex = re.compile(r"^([0-9]+)\s+([0-9]+)\s+(.*?)$")
 
     dates = []
     counts = []
