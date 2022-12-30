@@ -163,7 +163,7 @@ def main():
     sys.stdout.flush()
     with PdfPages("loc.pdf") as pdf:
         generate_plot(pdf, dates, counts, labels)
-        for year in range(2014, 2023):
+        for year in range(2014, 2024):
             generate_plot(pdf, dates, counts, labels, (year, year + 1))
     print(" done.")
 
