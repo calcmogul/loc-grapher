@@ -2,15 +2,16 @@
 
 import argparse
 import datetime
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-from matplotlib.ticker import MultipleLocator
-import numpy as np
 import os
 import re
 import subprocess
 import sys
 import tempfile
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib.ticker import MultipleLocator
+import numpy as np
 
 
 def clone_repo(url, branch):
