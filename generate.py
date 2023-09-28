@@ -87,14 +87,6 @@ def main():
     os.chdir(tempfile.gettempdir())
     clone_repo("https://github.com/wpilibsuite/allwpilib", branch)
 
-    languages = []
-    languages.append(
-        Language("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
-    )
-    languages.append(Language("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
-    languages.append(Language("Java", r"\.java$"))
-    languages.append(Language("Python", r"\.py$"))
-
     # Collect commit data
     print("Collecting commit data...", end="")
     sys.stdout.flush()
@@ -110,6 +102,14 @@ def main():
     ]
     output_list = subprocess.check_output(args, encoding="utf-8").splitlines()
     print(" done.")
+
+    languages = []
+    languages.append(
+        Language("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
+    )
+    languages.append(Language("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
+    languages.append(Language("Java", r"\.java$"))
+    languages.append(Language("Python", r"\.py$"))
 
     # Fields are additions, subtractions, and filename
     line_regex = re.compile(r"^([0-9]+)\s+([0-9]+)\s+(.*?)$")
