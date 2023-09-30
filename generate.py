@@ -182,7 +182,7 @@ def main():
     subproject_categories.append(
         Category(
             "ImGUI tools",
-            r"^(datalogtool|glass|outlineviewer|roborioteamnumbersetter|wpigui)/",
+            r"^(datalogtool|glass|outlineviewer|roborioteamnumbersetter|sysid|wpigui)/",
         )
     )
     subproject_categories.append(Category("Integration tests", r"IntegrationTests/"))
