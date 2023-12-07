@@ -108,7 +108,7 @@ def generate_plot(pdf, dates, counts, labels, title, years=None):
     plt.ylabel("Lines of Code")
 
     ax = plt.gca()
-    ax.yaxis.set_minor_locator(MultipleLocator(50e3))
+    ax.yaxis.set_major_locator(MultipleLocator(50e3))
     ax.ticklabel_format(axis="y", style="scientific", scilimits=(3, 3), useOffset=False)
 
     if years:
