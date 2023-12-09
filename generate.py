@@ -159,6 +159,7 @@ def main():
     lang_categories.append(
         Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
     )
+    lang_categories.append(Category("generated", r"generated/"))
     lang_categories.append(Category("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
     lang_categories.append(Category("Java", r"\.java$"))
     lang_categories.append(Category("Python", r"\.py$"))
@@ -167,14 +168,18 @@ def main():
         lang_categories, output_list
     )
 
-    # Move thirdparty to top of stackplot by placing it at the end of the list
+    # Move thirdparty and generated to top of stackplot by placing it at the end
+    # of the list
     lang_counts.append(lang_counts.pop(0))
+    lang_counts.append(lang_counts.pop(0))
+    lang_labels.append(lang_labels.pop(0))
     lang_labels.append(lang_labels.pop(0))
 
     subproject_categories = []
     subproject_categories.append(
         Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
     )
+    subproject_categories.append(Category("generated", r"generated/"))
     subproject_categories.append(Category("CSCore", r"^(cameraserver|cscore)/"))
     subproject_categories.append(Category("Commands", r"^wpilibNewCommands/"))
     subproject_categories.append(Category("Examples", r"Examples/"))
@@ -200,8 +205,11 @@ def main():
         subproject_categories, output_list
     )
 
-    # Move thirdparty to top of stackplot by placing it at the end of the list
+    # Move thirdparty and generated to top of stackplot by placing it at the end
+    # of the list
     subproject_counts.append(subproject_counts.pop(0))
+    subproject_counts.append(subproject_counts.pop(0))
+    subproject_labels.append(subproject_labels.pop(0))
     subproject_labels.append(subproject_labels.pop(0))
 
     # Generate plots
