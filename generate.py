@@ -108,7 +108,7 @@ def generate_plot(pdf, dates, counts, labels, title, years=None):
     plt.ylabel("Lines of Code")
 
     ax = plt.gca()
-    ax.yaxis.set_major_locator(MultipleLocator(50e3))
+    ax.yaxis.set_major_locator(MultipleLocator(1000))
     ax.ticklabel_format(axis="y", style="scientific", scilimits=(3, 3), useOffset=False)
 
     if years:
@@ -137,7 +137,7 @@ def main():
 
     cwd = os.getcwd()
     os.chdir(tempfile.gettempdir())
-    clone_repo("https://github.com/wpilibsuite/allwpilib", branch)
+    clone_repo("https://github.com/SleipnirGroup/Sleipnir", branch)
 
     # Collect commit data
     print("Collecting commit data...", end="")
@@ -156,13 +156,12 @@ def main():
     print(" done.")
 
     lang_categories = []
-    lang_categories.append(
-        Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
-    )
-    lang_categories.append(Category("generated", r"generated/"))
+    lang_categories.append(Category("thirdparty", r"^thirdparty/"))
+    lang_categories.append(Category("generated", r"^jormungandr/cpp/Docstrings\.hpp$"))
     lang_categories.append(Category("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
-    lang_categories.append(Category("Java", r"\.java$"))
     lang_categories.append(Category("Python", r"\.py$"))
+    lang_categories.append(Category("CMake", r"CMakeLists\.txt$|\.cmake$"))
+    lang_categories.append(Category("TOML", r"\.toml$"))
 
     lang_dates, lang_counts, lang_labels = generate_plot_data(
         lang_categories, output_list
@@ -176,30 +175,25 @@ def main():
     lang_labels.append(lang_labels.pop(0))
 
     subproject_categories = []
+    subproject_categories.append(Category("thirdparty", r"^thirdparty/"))
     subproject_categories.append(
-        Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
+        Category("generated", r"^jormungandr/cpp/Docstrings\.hpp$")
     )
-    subproject_categories.append(Category("generated", r"generated/"))
-    subproject_categories.append(Category("CSCore", r"^(cameraserver|cscore)/"))
-    subproject_categories.append(Category("Commands", r"^wpilibNewCommands/"))
-    subproject_categories.append(Category("Examples", r"Examples/"))
-    subproject_categories.append(Category("HAL", r"^hal/"))
+    subproject_categories.append(Category("C++ library", r"^(include|src)/"))
+    subproject_categories.append(Category("C++ tests", r"^test/"))
     subproject_categories.append(
         Category(
-            "ImGUI tools",
-            r"^(datalogtool|glass|outlineviewer|roborioteamnumbersetter|sysid|wpigui)/",
+            "Python library",
+            r"^jormungandr/(autodiff|cpp|optimization)|^jormungandr/__init__\.py$",
         )
     )
-    subproject_categories.append(Category("Integration tests", r"IntegrationTests/"))
-    subproject_categories.append(Category("NTCore", r"^(ntcore|ntcoreffi)/"))
+    subproject_categories.append(Category("Python tests", r"^jormungandr/test"))
+    subproject_categories.append(Category("benchmarks", r"^benchmarks/"))
+    subproject_categories.append(Category("examples", r"^examples/"))
     subproject_categories.append(
-        Category("Simulation", r"^(simulation|romiVendordep|xrpVendordep)/")
+        Category("build system", r"CMakeLists\.txt$|\.cmake$|pyproject\.toml$")
     )
-    subproject_categories.append(Category("WPILib", r"^(wpilibc|wpilibj)/"))
-    subproject_categories.append(Category("WPIMath", r"^wpimath/"))
-    subproject_categories.append(Category("WPINet", r"^wpinet/"))
-    subproject_categories.append(Category("WPIUnits", r"^wpiunits/"))
-    subproject_categories.append(Category("WPIUtil", r"^wpiutil/"))
+    subproject_categories.append(Category("tools", r"^tools/"))
 
     subproject_dates, subproject_counts, subproject_labels = generate_plot_data(
         subproject_categories, output_list
@@ -218,7 +212,7 @@ def main():
     sys.stdout.flush()
     with PdfPages("loc.pdf") as pdf:
         generate_plot(
-            pdf, lang_dates, lang_counts, lang_labels, "WPILib Language Lines of Code"
+            pdf, lang_dates, lang_counts, lang_labels, "Sleipnir Language Lines of Code"
         )
 
         generate_plot(
@@ -226,7 +220,7 @@ def main():
             subproject_dates,
             subproject_counts,
             subproject_labels,
-            "WPILib Subproject Lines of Code",
+            "Sleipnir Subproject Lines of Code",
         )
 
         min_year = min(date.year for date in lang_dates)
@@ -237,7 +231,7 @@ def main():
                 lang_dates,
                 lang_counts,
                 lang_labels,
-                "WPILib Language Lines of Code",
+                "Sleipnir Language Lines of Code",
                 (year, year + 1),
             )
     print(" done.")
