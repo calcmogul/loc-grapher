@@ -220,6 +220,7 @@ def main():
         generate_plot(
             pdf, lang_dates, lang_counts, lang_labels, "WPILib Language Lines of Code"
         )
+
         generate_plot(
             pdf,
             subproject_dates,
@@ -227,7 +228,10 @@ def main():
             subproject_labels,
             "WPILib Subproject Lines of Code",
         )
-        for year in range(2014, 2025):
+
+        min_year = min(date.year for date in lang_dates)
+        max_year = max(date.year for date in lang_dates)
+        for year in range(min_year, max_year + 1):
             generate_plot(
                 pdf,
                 lang_dates,
