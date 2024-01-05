@@ -227,7 +227,7 @@ def main():
             subproject_labels,
             "WPILib Subproject Lines of Code",
         )
-        for year in range(2014, 2024):
+        for year in range(2014, 2025):
             generate_plot(
                 pdf,
                 lang_dates,
