@@ -157,7 +157,10 @@ def main():
 
     lang_categories = []
     lang_categories.append(
-        Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
+        Category(
+            "thirdparty",
+            r"Eigen/|drake/|libuv/|llvm/|sigslot/|thirdparty/|unsupported/|uv/",
+        )
     )
     lang_categories.append(Category("generated", r"generated/"))
     lang_categories.append(Category("C++", r"\.(cc|cpp|h|hpp|inc|inl)$"))
@@ -177,7 +180,10 @@ def main():
 
     subproject_categories = []
     subproject_categories.append(
-        Category("thirdparty", r"Eigen/|drake/|libuv/|llvm/|thirdparty/|unsupported/")
+        Category(
+            "thirdparty",
+            r"Eigen/|drake/|libuv/|llvm/|sigslot/|thirdparty/|unsupported/|uv/",
+        )
     )
     subproject_categories.append(Category("generated", r"generated/"))
     subproject_categories.append(Category("CSCore", r"^(cameraserver|cscore)/"))
