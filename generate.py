@@ -188,6 +188,7 @@ def main():
     subproject_categories.append(Category("generated", r"generated/"))
     subproject_categories.append(Category("CSCore", r"^(cameraserver|cscore)/"))
     subproject_categories.append(Category("Commands", r"^wpilibNewCommands/"))
+    subproject_categories.append(Category("DataLog", r"^datalog/"))
     subproject_categories.append(Category("Epilogue", r"epilogue-(processor|runtime)/"))
     subproject_categories.append(Category("Examples", r"Examples/"))
     subproject_categories.append(Category("HAL", r"^hal/"))
