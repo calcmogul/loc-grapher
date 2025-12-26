@@ -110,14 +110,11 @@ def generate_plot(pdf, dates, counts, labels, title, years=None):
     ax.ticklabel_format(axis="y", style="scientific", scilimits=(3, 3), useOffset=False)
 
     if years:
-        ax.set_xlim([datetime.date(years[0], 1, 1), datetime.date(years[1], 1, 1)])
+        ax.set_xlim(datetime.date(years[0], 1, 1), datetime.date(years[1], 1, 1))
         ax.xaxis.set_major_locator(mdate.MonthLocator(bymonthday=2))
     else:
         ax.set_xlim(
-            [
-                datetime.date(dates[0].year, 1, 1),
-                datetime.date(dates[-1].year + 1, 1, 1),
-            ]
+            datetime.date(dates[0].year, 1, 1), datetime.date(dates[-1].year + 1, 1, 1)
         )
         ax.xaxis.set_major_locator(mdate.YearLocator(day=2))
     plt.gcf().autofmt_xdate()
