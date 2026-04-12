@@ -181,8 +181,11 @@ def main():
         )
     )
     subproject_categories.append(Category("generated", r"generated/"))
+    subproject_categories.append(Category("AprilTag", r"apriltag/"))
     subproject_categories.append(Category("CSCore", r"^(cameraserver|cscore)/"))
-    subproject_categories.append(Category("Commands", r"^wpilibNewCommands/"))
+    subproject_categories.append(
+        Category("Commands", r"^(commandsv2|commandsv3|wpilibNewCommands)/")
+    )
     subproject_categories.append(Category("DataLog", r"^datalog/"))
     subproject_categories.append(Category("Epilogue", r"epilogue-(processor|runtime)/"))
     subproject_categories.append(Category("Examples", r"Examples/"))
@@ -190,10 +193,11 @@ def main():
     subproject_categories.append(
         Category(
             "ImGUI tools",
-            r"^(datalogtool|glass|outlineviewer|roborioteamnumbersetter|sysid|wpigui)/",
+            r"^(tools/)?(datalogtool|glass|outlineviewer|processstarter|roborioteamnumbersetter|sysid|wpical|wpigui)/",
         )
     )
     subproject_categories.append(Category("Integration tests", r"IntegrationTests/"))
+    subproject_categories.append(Category("javac plugin", r"javacPlugin/"))
     subproject_categories.append(Category("NTCore", r"^(ntcore|ntcoreffi)/"))
     subproject_categories.append(
         Category("Simulation", r"^(simulation|romiVendordep|xrpVendordep)/")
