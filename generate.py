@@ -128,7 +128,7 @@ def generate_plot(pdf, dates, counts, labels, title, years=None):
 
 
 def main():
-    branch = "2027"
+    branch = "main"
 
     cwd = os.getcwd()
     os.chdir(tempfile.gettempdir())
